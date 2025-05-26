@@ -21,16 +21,6 @@ document.getElementById("ia").onclick = function () {
     ]);
 };
 
-function showPopup(title, items) {
-    const content = document.getElementById("popup-content");
-    content.innerHTML = "<h2>" + title + "</h2><ul>" + items.map(item => "<li>" + item + "</li>").join("") + "</ul>";
-    document.getElementById("popup").style.display = "block";
-}
-
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-}
-
 const clickSound = new Audio('click.mp3');
 const closeSound = new Audio('close.mp3');
 
