@@ -57,3 +57,7 @@ button:hover {
 .navbar a:hover {
     text-decoration: underline;
 }
+.background {
+    width: 100%;
+    display: block;
+}
