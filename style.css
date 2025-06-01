@@ -61,3 +61,17 @@ button:hover {
     width: 100%;
     display: block;
 }
+/* In style.css, at the bottom */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack navigation items vertically on small screens */
+        align-items: center;
+    }
+    main {
+        padding: 10px; /* Reduce padding on smaller screens */
+    }
+    .button {
+        width: 90%; /* Make buttons wider on small screens */
+        box-sizing: border-box; /* Include padding/border in width */
+    }
+}
