@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine à Voyager dans le Temps Éducative</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a, #2a2a5a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .platform-container {
+            width: 1920px;
+            height: 600px;
+            background: #0c0c24;
+            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(0, 200, 255, 0.3);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #2a5a7a;
+        }
+        
+        /* Effets de machine à voyager dans le temps */
+        .time-machine-effects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .time-machine-effects:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent, rgba(0, 100, 255, 0.1) 40%, transparent 70%);
+            animation: pulse 8s infinite alternate;
+        }
+        
+        .time-machine-effects:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.05), transparent),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="100" fill="none" stroke="%23007fff" stroke-width="0.5" stroke-dasharray="2 2"/></svg>');
+            opacity: 0.5;
+        }
+        
+        .grid-line {
+            position: absolute;
+            background: rgba(0, 150, 255, 0.1);
+        }
+        
+        .vertical-line {
+            width: 1px;
+            height: 100%;
+        }
+        
+        .horizontal-line {
+            width: 100%;
+            height: 1px;
+        }
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 150, 255, 0.5), transparent);
+            animation: float 15s infinite linear;
+        }
+        
+        .control-panel {
+            width: 240px;
+            background: rgba(10, 20, 40, 0.8);
+            border-right: 2px solid #2a5a7a;
+            padding: 30px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+        
+        .panel-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #4fc3f7;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.7);
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: #b3e5fc;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            background: rgba(20, 40, 80, 0.4);
+            border: 1px solid rgba(64, 128, 255, 0.3);
+            margin-bottom: 8px;
+        }
+        
+        .nav-item i {
+            margin-right: 12px;
+            font-size: 20px;
+            color: #4fc3f7;
+        }
+        
+        .nav-item:hover {
+            background: rgba(30, 60, 120, 0.6);
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
+            color: #ffffff;
+            border-color: #4fc3f7;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+        
+        .module-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .module-title {
+            font-size: 36px;
+            color: #4fc3f7;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .module-subtitle {
+            font-size: 24px;
+            color: #81d4fa;
+            opacity: 0.9;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            flex: 1;
+        }
+        
+        .content-card {
+            background: rgba(20, 40, 80, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(64, 128, 255, 0.3);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #00bcd4, #3f51b5);
+        }
+        
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 100, 255, 0.4);
+            border-color: #4fc3f7;
+        }
+        
+        .card-icon {
+            font-size: 48px;
+            color: #4fc3f7;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.7);
+        }
+        
+        .card-title {
+            font-size: 22px;
+            color: #e1f5fe;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .card-desc {
+            font-size: 16px;
+            color: #b3e5fc;
+            opacity: 0.8;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+            100% { opacity: 0.3; transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translate(100px, -100px); opacity: 0; }
+        }
+        
+        /* Années IA */
+        .time-label {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            font-size: 24px;
+            color: #81d4fa;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(129, 212, 250, 0.7);
+            z-index: 3;
+        }
+        
+        .time-years {
+            position: absolute;
+            right: 30px;
+            top: 60px;
+            font-size: 28px;
+            color: #4fc3f7;
+            font-weight: bold;
+            z-index: 3;
+        }
+        
+        .start-button {
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            background: linear-gradient(45deg, #00bcd4, #3f51b5);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.7);
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .start-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 188, 212, 0.9);
+        }
+        
+        /* Ajouts pour le style Windows */
+        .windows-logo {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 3;
+        }
+        
+        .window-pane {
+            width: 40px;
+            height: 40px;
+            background: rgba(64, 128, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(64, 128, 255, 0.5);
+        }
+        
+        .progress-ring {
+            position: absolute;
+            right: 30px;
+            top: 120px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(#00bcd4 0% 75%, transparent 75% 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+        }
+        
+        .progress-ring-inner {
+            width: 50px;
+            height: 50px;
+            background: #0c0c24;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4fc3f7;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="platform-container">
+        <!-- Effets de machine à voyager dans le temps -->
+        <div class="time-machine-effects">
+            <!-- Lignes de grille -->
+            <div class="grid-line vertical-line" style="left: 25%;"></div>
+            <div class="grid-line vertical-line" style="left: 50%;"></div>
+            <div class="grid-line vertical-line" style="left: 75%;"></div>
+            <div class="grid-line horizontal-line" style="top: 33%;"></div>
+            <div class="grid-line horizontal-line" style="top: 66%;"></div>
+            
+            <!-- Bulles flottantes -->
+            <div class="bubble" style="width: 80px; height: 80px; top: 20%; left: 15%;"></div>
+            <div class="bubble" style="width: 60px; height: 60px; top: 70%; left: 30%;"></div>
+            <div class="bubble" style="width: 100px; height: 100px; top: 40%; left: 80%;"></div>
+            <div class="bubble" style="width: 50px; height: 50px; top: 10%; left: 60%;"></div>
+        </div>
+        
+        <!-- Panneau de navigation gauche -->
+        <div class="control-panel">
+            <div class="panel-title">NAVIGATION</div>
+            <a href="#" class="nav-item">
+                <i class="fas fa-user-circle"></i>
+                <span>Profil</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-comments"></i>
+                <span>Discussion</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Suivi personnel</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-arrow-left"></i>
+                <span>Retour</span>
+            </a>
+        </div>
+        
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <div class="module-header">
+                <h1 class="module-title">Module 1 : Windows</h1>
+                <div class="module-subtitle">Unité 1 : Introduction à l’environnement Windows</div>
+            </div>
+            
+            <div class="content-grid">
+                <!-- Carte 1 -->
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="card-title">Concepts théoriques clés</h3>
+                    <p class="card-desc">Découvrez les fondamentaux de l'environnement Windows</p>
+                </div>
+                
+                <!-- Carte 2 -->
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="card-title">Vidéo tutoriel</h3>
+                    <p class="card-desc">Guide visuel pour maîtriser l'interface Windows</p>
+                </div>
+                
+                <!-- Carte 3 -->
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="card-title">Exercices</h3>
+                    <p class="card-desc">Pratiquez vos compétences avec des exercices guidés</p>
+                </div>
+                
+                <!-- Carte 4 -->
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="card-title">Auto évaluation</h3>
+                    <p class="card-desc">Testez vos connaissances avec nos quiz interactifs</p>
+                </div>
+                
+                <!-- Carte 5 -->
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="card-title">Évaluation sommative</h3>
+                    <p class="card-desc">Validez vos acquis avec une évaluation finale</p>
+                </div>
+                
+                <!-- Carte 6 -->
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="card-title">Dépôt de travail final</h3>
+                    <p class="card-desc">Soumettez votre projet de fin de module</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Éléments de machine à voyager dans le temps -->
+        <div class="time-label">ANNÉES</div>
+        <div class="time-years">2020<br>IA</div>
+        <button class="start-button">START</button>
+        
+        <!-- Logo Windows -->
+        <div class="windows-logo">
+            <div class="window-pane">W</div>
+            <div class="window-pane">I</div>
+            <div class="window-pane">N</div>
+            <div class="window-pane">D</div>
+        </div>
+        
+        <!-- Élément de progression -->
+        <div class="progress-ring">
+            <div class="progress-ring-inner">75%</div>
+        </div>
+    </div>
+
+    <script>
+        // Animation des bulles
+        document.addEventListener('DOMContentLoaded', function() {
+            const bubbles = document.querySelectorAll('.bubble');
+            
+            bubbles.forEach((bubble, index) => {
+                // Position aléatoire
+                const left = Math.random() * 90 + 5;
+                const top = Math.random() * 90 + 5;
+                bubble.style.left = `${left}%`;
+                bubble.style.top = `${top}%`;
+                
+                // Animation personnalisée
+                const duration = 15 + Math.random() * 15;
+                const delay = Math.random() * 5;
+                bubble.style.animation = `float ${duration}s infinite ${delay}s linear`;
+            });
+        });
+    </script>
+</body>
+</html>
