@@ -3,559 +3,530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine Temporelle Éducative - Module Windows</title>
+    <title>Espace CRMEF - Voyage Pédagogique</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Base styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: radial-gradient(ellipse at bottom, #0c0c24 0%, #050518 100%);
-            color: #e0e0ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: #fff;
             overflow-x: hidden;
-            padding: 20px;
-        }
-        
-        /* Time machine container */
-        .time-machine {
-            width: 100%;
-            max-width: 1200px;
-            height: 85vh;
             position: relative;
-            background: rgba(10, 15, 30, 0.85);
-            border-radius: 20px;
-            box-shadow: 0 0 50px rgba(0, 150, 255, 0.6);
-            overflow: hidden;
-            border: 2px solid rgba(100, 200, 255, 0.3);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
         }
         
-        /* Time portal effect */
-        .time-portal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(
-                circle,
-                transparent 30%,
-                rgba(0, 100, 255, 0.1) 50%,
-                transparent 70%
-            );
-            transform: translate(-50%, -50%);
-            animation: spin 40s linear infinite;
-            z-index: 1;
-        }
-        
-        /* Grid effect */
-        .time-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 180, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 180, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 2;
-        }
-        
-        /* Header section */
-        .module-header {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 30px 20px;
-            background: rgba(15, 25, 50, 0.6);
-            border-bottom: 1px solid rgba(64, 128, 255, 0.3);
-        }
-        
-        .module-title {
-            font-size: 3rem;
-            color: #4fc3f7;
-            text-shadow: 0 0 20px rgba(79, 195, 247, 0.8);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            font-weight: 700;
-            background: linear-gradient(to right, #4fc3f7, #3f51b5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .module-subtitle {
-            font-size: 1.3rem;
-            color: #81d4fa;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* Progress and info section */
-        .info-panel {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 30px;
-            background: rgba(20, 30, 60, 0.5);
-            position: relative;
-            z-index: 10;
-        }
-        
-        .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .progress-label {
-            font-size: 1.1rem;
-            color: #b3e5fc;
-        }
-        
-        .progress-bar {
-            width: 200px;
-            height: 12px;
-            background: rgba(30, 60, 120, 0.6);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            width: 65%;
-            background: linear-gradient(90deg, #00bcd4, #3f51b5);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
-        }
-        
-        .time-display {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.2rem;
-            color: #81d4fa;
-        }
-        
-        .time-period {
-            background: rgba(30, 60, 120, 0.6);
-            padding: 5px 15px;
-            border-radius: 20px;
-            border: 1px solid rgba(64, 128, 255, 0.3);
-        }
-        
-        /* Units container */
-        .units-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 10;
-            flex: 1;
-            flex-wrap: wrap;
-        }
-        
-        /* Unit card */
-        .unit-card {
-            width: 320px;
-            background: rgba(20, 40, 80, 0.4);
-            border-radius: 15px;
-            border: 1px solid rgba(64, 128, 255, 0.4);
-            padding: 30px;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .unit-card::before {
+        body::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #00bcd4, #3f51b5);
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100,149,237,0.05) 0%, transparent 20%);
+            z-index: -1;
         }
         
-        .unit-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 100, 255, 0.5);
-            border-color: #4fc3f7;
-        }
-        
-        .unit-number {
-            font-size: 2rem;
-            color: #4fc3f7;
-            margin-bottom: 15px;
-            font-weight: bold;
-            text-shadow: 0 0 15px rgba(79, 195, 247, 0.7);
-        }
-        
-        .unit-name {
-            font-size: 1.8rem;
-            color: #e1f5fe;
-            margin-bottom: 20px;
-            font-weight: 600;
-            flex: 1;
-        }
-        
-        .unit-description {
-            font-size: 1.1rem;
-            color: #b3e5fc;
-            line-height: 1.6;
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
-        
-        .unit-icon {
-            font-size: 3.5rem;
-            color: #4fc3f7;
-            text-align: center;
-            margin: 15px 0;
-            text-shadow: 0 0 15px rgba(79, 195, 247, 0.5);
-        }
-        
-        .unit-status {
+        .container {
+            width: 90%;
+            max-width: 1000px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #81d4fa;
+            padding: 30px;
+            gap: 40px;
         }
         
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 8px;
+        .header {
+            text-align: center;
+            animation: fadeInDown 1s ease-out;
         }
         
-        .status-completed {
-            background: #00c853;
-            box-shadow: 0 0 8px #00c853;
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(100, 149, 237, 0.7);
+            background: linear-gradient(to right, #64b5f6, #bb86fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
         }
         
-        .status-in-progress {
-            background: #ffd600;
-            box-shadow: 0 0 8px #ffd600;
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
-        .status-not-started {
-            background: #ff3d00;
-            box-shadow: 0 0 8px #ff3d00;
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
         }
         
-        /* Navigation */
-        .nav-buttons {
+        .astronaut-container {
+            position: relative;
+            perspective: 1000px;
+            flex: 1;
+            min-width: 300px;
             display: flex;
             justify-content: center;
-            gap: 20px;
-            padding: 20px;
+        }
+        
+        .astronaut {
+            width: 220px;
+            height: 300px;
             position: relative;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite, rotate 20s linear infinite;
+        }
+        
+        /* Casque */
+        .helmet {
+            width: 180px;
+            height: 180px;
+            background: #f8f8f8;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 70px;
+            left: 20px;
+            box-shadow: 
+                inset 0 0 25px rgba(0,0,0,0.1),
+                0 0 20px rgba(100, 180, 255, 0.7);
+            overflow: hidden;
             z-index: 10;
         }
         
-        .nav-button {
-            background: rgba(30, 60, 120, 0.7);
-            color: #b3e5fc;
-            border: 1px solid rgba(64, 128, 255, 0.4);
-            padding: 12px 35px;
+        /* Visière */
+        .visor {
+            position: absolute;
+            width: 120px;
+            height: 60px;
+            background: linear-gradient(to bottom, #7ec3f0, #5d9ce0);
+            border-radius: 30px;
+            top: 60px;
+            left: 30px;
+            box-shadow: 
+                inset 0 -8px 25px rgba(50, 120, 200, 0.8),
+                0 0 15px rgba(100, 200, 255, 0.8);
+            z-index: 12;
+        }
+        
+        /* Reflet visière */
+        .visor-reflex {
+            position: absolute;
+            width: 40px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            top: 20px;
+            left: 20px;
+            transform: rotate(-20deg);
+            z-index: 13;
+        }
+        
+        /* Corps */
+        .body {
+            position: absolute;
+            width: 140px;
+            height: 100px;
+            background: #f0f0f0;
+            border-radius: 40% 40% 20% 20%;
+            bottom: 0;
+            left: 40px;
+            box-shadow: 
+                inset 0 -15px 15px rgba(0,0,0,0.05),
+                0 0 15px rgba(100, 180, 255, 0.6);
+            z-index: 8;
+        }
+        
+        /* Épaules */
+        .shoulders {
+            position: absolute;
+            width: 180px;
+            height: 50px;
+            background: #e8e8e8;
+            border-radius: 25px;
+            bottom: 100px;
+            left: 20px;
+            z-index: 9;
+        }
+        
+        /* Sac à dos */
+        .backpack {
+            position: absolute;
+            width: 70px;
+            height: 90px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            bottom: 20px;
+            right: 15px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+            z-index: 7;
+        }
+        
+        .backpack::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            background: #d0d0d0;
+            border-radius: 8px;
+            top: 15px;
+            left: 10px;
+        }
+        
+        /* Bras */
+        .arm {
+            position: absolute;
+            width: 30px;
+            height: 80px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            z-index: 5;
+        }
+        
+        .arm.left {
+            bottom: 80px;
+            left: 10px;
+            transform: rotate(15deg);
+        }
+        
+        .arm.right {
+            bottom: 80px;
+            right: 10px;
+            transform: rotate(-15deg);
+        }
+        
+        /* Jambes */
+        .leg {
+            position: absolute;
+            width: 30px;
+            height: 90px;
+            background: #f0f0f0;
+            border-radius: 15px 15px 0 0;
+            bottom: -70px;
+            z-index: 6;
+        }
+        
+        .leg.left {
+            left: 60px;
+            transform: rotate(5deg);
+        }
+        
+        .leg.right {
+            right: 60px;
+            transform: rotate(-5deg);
+        }
+        
+        /* Bulle de texte */
+        .speech-bubble {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.2),
+                0 0 30px rgba(100, 149, 237, 0.5);
+            position: relative;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            max-width: 500px;
+        }
+        
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 20%;
+            border: 20px solid transparent;
+            border-top-color: rgba(255, 255, 255, 0.95);
+            transform: translateX(-50%);
+        }
+        
+        .speech-text {
+            color: #1a237e;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .speech-highlight {
+            color: #2962ff;
+            font-weight: 600;
+            text-shadow: 0 0 5px rgba(41, 98, 255, 0.2);
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #2962ff, #6200ea);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.2rem;
+            font-weight: 600;
             border-radius: 50px;
-            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 
+                0 5px 15px rgba(41, 98, 255, 0.4),
+                0 0 20px rgba(100, 255, 218, 0.3);
             display: flex;
             align-items: center;
             gap: 10px;
+            animation: pulse 2s infinite;
+            margin-top: 20px;
         }
         
-        .nav-button:hover {
-            background: rgba(40, 80, 160, 0.9);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(79, 195, 247, 0.5);
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 8px 20px rgba(41, 98, 255, 0.6),
+                0 0 30px rgba(100, 255, 218, 0.5);
         }
         
-        .nav-button.primary {
-            background: linear-gradient(90deg, #00bcd4, #3f51b5);
-            color: white;
-            font-weight: 600;
+        .cta-button:active {
+            transform: translateY(0);
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #64b5f6;
+        }
+        
+        .feature h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #bb86fc;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Étoiles de fond */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 5s) infinite ease-in-out;
         }
         
         /* Animations */
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateY(0); }
+            50% { transform: translateY(-25px) rotateY(5deg); }
         }
         
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        @keyframes rotate {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0; 
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
         
         @keyframes pulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.3; }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
         
-        /* Particles */
-        .particle {
-            position: absolute;
-            background: rgba(100, 200, 255, 0.6);
-            border-radius: 50%;
-            animation: float 8s infinite ease-in-out;
-            z-index: 3;
-        }
-        
-        /* Footer */
-        .time-machine-footer {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 15px;
-            font-size: 0.9rem;
-            color: #81d4fa;
-            background: rgba(15, 25, 50, 0.6);
-            border-top: 1px solid rgba(64, 128, 255, 0.3);
-        }
-        
-        /* Responsive design */
-        @media (max-width: 1000px) {
-            .units-container {
+        @media (max-width: 768px) {
+            .content {
                 flex-direction: column;
-                align-items: center;
-                padding: 30px 20px;
+                gap: 40px;
             }
             
-            .module-title {
-                font-size: 2.3rem;
+            .header h1 {
+                font-size: 2.2rem;
             }
             
-            .module-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .time-machine {
-                height: auto;
-                min-height: 95vh;
-            }
-            
-            .info-panel {
-                flex-direction: column;
-                gap: 15px;
-                align-items: center;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .module-title {
-                font-size: 2rem;
-            }
-            
-            .unit-card {
-                width: 100%;
-                max-width: 350px;
-            }
-            
-            .nav-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-button {
-                width: 90%;
-                justify-content: center;
+            .speech-bubble::after {
+                left: 50%;
+                top: -20px;
+                border: 20px solid transparent;
+                border-bottom-color: rgba(255, 255, 255, 0.95);
+                transform: translateX(-50%) rotate(180deg);
             }
         }
     </style>
 </head>
 <body>
-    <!-- Machine à voyager dans le temps -->
-    <div class="time-machine">
-        <!-- Effets visuels -->
-        <div class="time-portal"></div>
-        <div class="time-grid"></div>
-        
-        <!-- Particules dynamiques -->
-        <div id="particles"></div>
-        
-        <!-- En-tête du module -->
-        <div class="module-header">
-            <h1 class="module-title">Module 1: Windows</h1>
-            <p class="module-subtitle">Explorez l'évolution de Windows à travers les époques temporelles</p>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Voyage dans le Temps Technologique</h1>
+            <p>Une expérience d'apprentissage révolutionnaire pour les CRMEFiens</p>
         </div>
         
-        <!-- Panel d'information -->
-        <div class="info-panel">
-            <div class="progress-container">
-                <span class="progress-label">Progression du module:</span>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <span>65%</span>
-            </div>
-            <div class="time-display">
-                <i class="fas fa-clock"></i>
-                <span class="time-period">Époque: 2020 - IA</span>
-            </div>
-        </div>
-        
-        <!-- Unités du module -->
-        <div class="units-container">
-            <!-- Unité 1 -->
-            <div class="unit-card" onclick="navigateToUnit(1)">
-                <div class="unit-number">Unité 1</div>
-                <h3 class="unit-name">Introduction à Windows</h3>
-                <div class="unit-icon">
-                    <i class="fas fa-window-restore"></i>
-                </div>
-                <p class="unit-description">
-                    Découvrez les fondamentaux du système d'exploitation Windows, 
-                    son interface et ses fonctionnalités de base à travers le temps.
-                </p>
-                <div class="unit-status">
-                    <span><span class="status-indicator status-completed"></span> Complété</span>
-                    <span>4 leçons</span>
+        <div class="content">
+            <div class="astronaut-container">
+                <div class="astronaut">
+                    <div class="helmet">
+                        <div class="visor">
+                            <div class="visor-reflex"></div>
+                        </div>
+                    </div>
+                    <div class="shoulders"></div>
+                    <div class="body"></div>
+                    <div class="backpack"></div>
+                    <div class="arm left"></div>
+                    <div class="arm right"></div>
+                    <div class="leg left"></div>
+                    <div class="leg right"></div>
                 </div>
             </div>
             
-            <!-- Unité 2 -->
-            <div class="unit-card" onclick="navigateToUnit(2)">
-                <div class="unit-number">Unité 2</div>
-                <h3 class="unit-name">Gestion des fichiers</h3>
-                <div class="unit-icon">
-                    <i class="fas fa-folder-open"></i>
-                </div>
-                <p class="unit-description">
-                    Maîtrisez l'explorateur de fichiers, l'organisation des dossiers 
-                    et les opérations essentielles à travers différentes versions.
+            <div class="speech-bubble">
+                <p class="speech-text">
+                    Bonjour chers <span class="speech-highlight">CRMEFiens</span>,<br><br>
+                    Bienvenue dans votre espace d'apprentissage interactif.<br><br>
+                    Cette plateforme a été conçue pour vous accompagner dans un voyage pédagogique innovant à travers les modules technologiques.
                 </p>
-                <div class="unit-status">
-                    <span><span class="status-indicator status-in-progress"></span> En cours</span>
-                    <span>6 leçons</span>
-                </div>
-            </div>
-            
-            <!-- Unité 3 -->
-            <div class="unit-card" onclick="navigateToUnit(3)">
-                <div class="unit-number">Unité 3</div>
-                <h3 class="unit-name">Personnalisation avancée</h3>
-                <div class="unit-icon">
-                    <i class="fas fa-sliders-h"></i>
-                </div>
-                <p class="unit-description">
-                    Personnalisez votre environnement, paramétrez les options système 
-                    et optimisez votre expérience utilisateur selon les époques.
-                </p>
-                <div class="unit-status">
-                    <span><span class="status-indicator status-not-started"></span> À venir</span>
-                    <span>5 leçons</span>
-                </div>
             </div>
         </div>
         
-        <!-- Navigation -->
-        <div class="nav-buttons">
-            <button class="nav-button" onclick="navigateToHome()">
-                <i class="fas fa-arrow-left"></i>
-                Retour à l'accueil
-            </button>
-            <button class="nav-button primary" onclick="startTimeTravel()">
-                Démarrer le voyage temporel
-                <i class="fas fa-rocket"></i>
-            </button>
-        </div>
+        <button class="cta-button" id="nextPageBtn">
+            <i class="fas fa-rocket"></i>
+            Commencer le voyage
+        </button>
         
-        <!-- Footer -->
-        <div class="time-machine-footer">
-            Plateforme Éducative Machine à Voyager dans le Temps © 2023 | Module Windows
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Modules Technologiques</h3>
+                <p>Contenu pédagogique innovant</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-vr-cardboard"></i>
+                <h3>Immersion 3D</h3>
+                <p>Expériences interactives</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-chart-line"></i>
+                <h3>Suivi Personnalisé</h3>
+                <p>Progression adaptée</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Création des particules dynamiques
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 40;
+        // Création des étoiles dynamiques
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.width = `${Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            star.style.setProperty('--duration', `${Math.random() * 4 + 2}s`);
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            starsContainer.appendChild(star);
+        }
+        
+        // Animation pour le bouton
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        nextPageBtn.addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement...';
+            this.disabled = true;
             
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Taille aléatoire
-                const size = Math.random() * 8 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Position aléatoire
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                // Opacité aléatoire
-                particle.style.opacity = Math.random() * 0.5 + 0.1;
-                
-                // Animation personnalisée
-                const duration = Math.random() * 12 + 6;
-                const delay = Math.random() * 5;
-                particle.style.animation = `float ${duration}s infinite ${delay}s ease-in-out`;
-                
-                container.appendChild(particle);
-            }
-        }
+            // Simuler un chargement avant la redirection
+            setTimeout(() => {
+                alert("Redirection vers la page suivante...");
+                // Dans une application réelle, vous utiliseriez:
+                // window.location.href = "page_suivante.html";
+            }, 1500);
+        });
         
-        // Animation des cartes au survol
-        function setupCardHoverEffects() {
-            const cards = document.querySelectorAll('.unit-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    const icon = card.querySelector('.unit-icon');
-                    icon.style.animation = 'pulse 1.5s infinite';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    const icon = card.querySelector('.unit-icon');
-                    icon.style.animation = '';
-                });
-            });
-        }
+        // Animation supplémentaire pour l'astronaute
+        document.querySelector('.astronaut').addEventListener('mouseenter', () => {
+            document.querySelector('.astronaut').style.animation = 'float 3s ease-in-out infinite, rotate 15s linear infinite';
+        });
         
-        // Navigation
-        function navigateToUnit(unitNumber) {
-            alert(`Navigation vers l'Unité ${unit} en cours de préparation...`);
-            // window.location.href = `unite${unitNumber}.html`;
-        }
-        
-        function navigateToHome() {
-            alert('Retour à la page d\'accueil...');
-            // window.location.href = 'index.html';
-        }
-        
-        function startTimeTravel() {
-            alert('Démarrage du voyage temporel! Préparation des systèmes...');
-        }
-        
-        // Initialisation au chargement
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            setupCardHoverEffects();
+        document.querySelector('.astronaut').addEventListener('mouseleave', () => {
+            document.querySelector('.astronaut').style.animation = 'float 6s ease-in-out infinite, rotate 20s linear infinite';
         });
     </script>
 </body>
