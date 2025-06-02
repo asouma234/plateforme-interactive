@@ -1,126 +1,273 @@
-<div class="platform-container" id="unit1-page">
-    <!-- Effets de machine à voyager dans le temps -->
-    <div class="time-machine-effects">
-        <!-- Lignes de grille -->
-        <div class="grid-line vertical-line" style="left: 25%;"></div>
-        <div class="grid-line vertical-line" style="left: 50%;"></div>
-        <div class="grid-line vertical-line" style="left: 75%;"></div>
-        <div class="grid-line horizontal-line" style="top: 33%;"></div>
-        <div class="grid-line horizontal-line" style="top: 66%;"></div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Windows</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
-        <!-- Bulles flottantes -->
-        <div class="bubble" style="width: 80px; height: 80px; top: 20%; left: 15%;"></div>
-        <div class="bubble" style="width: 60px; height: 60px; top: 70%; left: 30%;"></div>
-        <div class="bubble" style="width: 100px; height: 100px; top: 40%; left: 80%;"></div>
-        <div class="bubble" style="width: 50px; height: 50px; top: 10%; left: 60%;"></div>
-    </div>
-    
-    <!-- Panneau de navigation gauche -->
-    <div class="control-panel">
-        <div class="panel-title">NAVIGATION</div>
-        <a href="#" class="nav-item">
-            <i class="fas fa-user-circle"></i>
-            <span>Profil</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fas fa-comments"></i>
-            <span>Discussion</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Suivi personnel</span>
-        </a>
-        <a href="#" class="nav-item">
+        body {
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a, #2a2a5a);
+            color: #e0e0ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .windows-module {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            position: relative;
+            background: radial-gradient(circle at center, #0c0c24 0%, #050518 70%);
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0, 150, 255, 0.5);
+            overflow: hidden;
+            border: 1px solid rgba(0, 200, 255, 0.2);
+        }
+        
+        .time-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.7;
+        }
+        
+        .time-vortex {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, transparent 40%, rgba(0, 100, 255, 0.2) 70%, transparent 85%);
+            transform: translate(-50%, -50%);
+            animation: vortex 30s linear infinite;
+        }
+        
+        .time-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.7), transparent);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.7);
+            animation: float 15s infinite linear;
+        }
+        
+        .module-header {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 20;
+        }
+        
+        .module-title {
+            font-size: 48px;
+            color: #4fc3f7;
+            text-shadow: 0 0 20px rgba(79, 195, 247, 0.9);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .module-subtitle {
+            font-size: 28px;
+            color: #81d4fa;
+            opacity: 0.9;
+        }
+        
+        .units-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 50px;
+            z-index: 20;
+        }
+        
+        .unit-card {
+            background: rgba(20, 40, 80, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(64, 128, 255, 0.4);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 280px;
+            height: 280px;
+            cursor: pointer;
+        }
+        
+        .unit-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #00bcd4, #3f51b5);
+        }
+        
+        .unit-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 100, 255, 0.5);
+            border-color: #4fc3f7;
+        }
+        
+        .unit-number {
+            font-size: 32px;
+            color: #4fc3f7;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(79, 195, 247, 0.9);
+        }
+        
+        .unit-name {
+            font-size: 28px;
+            color: #e1f5fe;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .unit-description {
+            font-size: 18px;
+            color: #b3e5fc;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 60px;
+            bottom: 50px;
+            background: rgba(20, 40, 80, 0.7);
+            color: #b3e5fc;
+            border: 1px solid rgba(64, 128, 255, 0.3);
+            padding: 15px 30px;
+            border-radius: 60px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            z-index: 20;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .back-button:hover {
+            background: rgba(30, 60, 120, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 195, 247, 0.4);
+        }
+        
+        @keyframes vortex {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translate(100px, -100px); opacity: 0; }
+        }
+        
+        @media (max-width: 1200px) {
+            .units-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="windows-module" id="windows-module-page">
+        <div class="time-grid"></div>
+        <div class="time-vortex"></div>
+        <div class="time-particles" id="particles"></div>
+        
+        <div class="module-header">
+            <h1 class="module-title">Module 1 : Windows</h1>
+            <div class="module-subtitle">Maîtrisez l'environnement Windows à travers un voyage temporel</div>
+        </div>
+        
+        <div class="units-container">
+            <div class="unit-card" id="unit1-btn">
+                <div class="unit-number">Unité 1</div>
+                <h3 class="unit-name">Introduction à l'environnement Windows</h3>
+                <p class="unit-description">Découvrez les bases de l'interface Windows et ses composants essentiels</p>
+            </div>
+            
+            <div class="unit-card">
+                <div class="unit-number">Unité 2</div>
+                <h3 class="unit-name">Gestion des fichiers et dossiers</h3>
+                <p class="unit-description">Apprenez à organiser et manipuler vos fichiers efficacement</p>
+            </div>
+            
+            <div class="unit-card">
+                <div class="unit-number">Unité 3</div>
+                <h3 class="unit-name">Paramètres et personnalisation</h3>
+                <p class="unit-description">Personnalisez votre environnement de travail selon vos préférences</p>
+            </div>
+        </div>
+        
+        <div class="back-button" id="back-home-btn">
             <i class="fas fa-arrow-left"></i>
-            <span>Retour</span>
-        </a>
-    </div>
-    
-    <!-- Contenu principal -->
-    <div class="main-content">
-        <div class="unit-header">
-            <h1 class="unit-title">Unité 1 : Introduction à l'environnement Windows</h1>
-            <div class="unit-subtitle">Découvrez les fondamentaux du système d'exploitation Windows</div>
-        </div>
-        
-        <div class="content-grid">
-            <!-- Carte 1 -->
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-lightbulb"></i>
-                </div>
-                <h3 class="card-title">Concepts théoriques clés</h3>
-                <p class="card-desc">Découvrez les fondamentaux de l'environnement Windows</p>
-            </div>
-            
-            <!-- Carte 2 -->
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-video"></i>
-                </div>
-                <h3 class="card-title">Vidéo tutoriel</h3>
-                <p class="card-desc">Guide visuel pour maîtriser l'interface Windows</p>
-            </div>
-            
-            <!-- Carte 3 -->
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <h3 class="card-title">Exercices</h3>
-                <p class="card-desc">Pratiquez vos compétences avec des exercices guidés</p>
-            </div>
-            
-            <!-- Carte 4 -->
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-clipboard-check"></i>
-                </div>
-                <h3 class="card-title">Auto évaluation</h3>
-                <p class="card-desc">Testez vos connaissances avec nos quiz interactifs</p>
-            </div>
-            
-            <!-- Carte 5 -->
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <h3 class="card-title">Évaluation sommative</h3>
-                <p class="card-desc">Validez vos acquis avec une évaluation finale</p>
-            </div>
-            
-            <!-- Carte 6 -->
-            <div class="content-card">
-                <div class="card-icon">
-                    <i class="fas fa-folder-open"></i>
-                </div>
-                <h3 class="card-title">Dépôt de travail final</h3>
-                <p class="card-desc">Soumettez votre projet de fin de module</p>
-            </div>
+            Retour à l'accueil
         </div>
     </div>
-    
-    <!-- Éléments de machine à voyager dans le temps -->
-    <div class="time-label">ANNÉES</div>
-    <div class="time-years">2020<br>IA</div>
-    <button class="start-button">START</button>
-    
-    <!-- Logo Windows -->
-    <div class="windows-logo">
-        <div class="window-pane">W</div>
-        <div class="window-pane">I</div>
-        <div class="window-pane">N</div>
-        <div class="window-pane">D</div>
-    </div>
-    
-    <!-- Élément de progression -->
-    <div class="progress-ring">
-        <div class="progress-ring-inner">75%</div>
-    </div>
-    
-    <!-- Navigation de retour -->
-    <div class="back-to-module" id="back-module-btn">
-        <i class="fas fa-arrow-left"></i>
-        Retour au module
-    </div>
-</div>
+
+    <script>
+        // Création des particules
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Taille aléatoire
+            const size = Math.random() * 40 + 10;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Position aléatoire
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            particle.style.left = `${left}%`;
+            particle.style.top = `${top}%`;
+            
+            // Animation personnalisée
+            const duration = 15 + Math.random() * 20;
+            const delay = Math.random() * 10;
+            particle.style.animation = `float ${duration}s infinite ${delay}s linear`;
+            
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
