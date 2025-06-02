@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine à Voyager dans le Temps Éducative</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET ET STYLES GÉNÉRAUX */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #0a0a1a;
+            color: #e0e0ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* HEADER DE LA PLATEFORME */
+        .platform-header {
+            background: rgba(10, 15, 30, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 150, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            color: #4fc3f7;
+            animation: pulse 2s infinite alternate;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #4fc3f7, #81d4fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.3);
+        }
+        
+        .main-nav {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            color: #b3e5fc;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background: rgba(30, 60, 120, 0.6);
+            color: #ffffff;
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(45deg, #00bcd4, #3f51b5);
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+        }
+        
+        /* CONTENU PRINCIPAL */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .content-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.7);
+        }
+        
+        .section-description {
+            font-size: 20px;
+            color: #81d4fa;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .modules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .module-card {
+            background: rgba(20, 30, 50, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(64, 128, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 100, 255, 0.4);
+            border-color: #4fc3f7;
+        }
+        
+        .module-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .module-icon {
+            font-size: 36px;
+            color: #4fc3f7;
+            width: 60px;
+            height: 60px;
+            background: rgba(20, 40, 80, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .module-title {
+            font-size: 22px;
+            color: #e1f5fe;
+            font-weight: 600;
+        }
+        
+        .module-description {
+            font-size: 16px;
+            color: #b3e5fc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .progress-container {
+            height: 8px;
+            background: rgba(100, 100, 150, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00bcd4, #3f51b5);
+            border-radius: 4px;
+            width: 75%;
+        }
+        
+        .progress-text {
+            text-align: right;
+            font-size: 14px;
+            color: #81d4fa;
+        }
+        
+        /* PAGE DE LA MACHINE À VOYAGER DANS LE TEMPS */
+        .time-machine-container {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            background: url('Background.png.png') center/cover no-repeat;
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0, 150, 255, 0.5);
+            overflow: hidden;
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            margin: 30px 0;
+        }
+        
+        .time-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 150, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.7;
+        }
+        
+        .time-vortex {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, transparent 40%, rgba(0, 100, 255, 0.2) 70%, transparent 85%);
+            transform: translate(-50%, -50%);
+            animation: vortex 30s linear infinite;
+        }
+        
+        .time-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 200, 255, 0.7), transparent);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.7);
+            animation: float 15s infinite linear;
+        }
+        
+        .time-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+        }
+        
+        .time-navigation {
+            width: 280px;
+            padding: 40px 20px;
+            background: rgba(10, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(0, 200, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .time-nav-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 200, 255, 0.3);
+        }
+        
+        .time-nav-title {
+            font-size: 28px;
+            color: #4fc3f7;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(79, 195, 247, 0.8);
+            margin-bottom: 10px;
+        }
+        
+        .time-nav-subtitle {
+            font-size: 16px;
+            color: #81d4fa;
+            opacity: 0.8;
+        }
+        
+        .time-nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .time-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 25px;
+            border-radius: 10px;
+            color: #b3e5fc;
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.4s ease;
+            background: rgba(20, 40, 80, 0.4);
+            border: 1px solid rgba(64, 128, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .time-nav-item i {
+            margin-right: 15px;
+            font-size: 24px;
+            color: #4fc3f7;
+            transition: all 0.4s ease;
+        }
+        
+        .time-nav-item:hover {
+            background: rgba(30, 60, 120, 0.8);
+            transform: translateX(10px);
+            box-shadow: 0 0 25px rgba(79, 195, 247, 0.6);
+            color: #ffffff;
+            border-color: #4fc3f7;
+        }
+        
+        .time-main-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .time-module-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 200, 255, 0.2);
+        }
+        
+        .time-module-title {
+            font-size: 48px;
+            color: #4fc3f7;
+            text-shadow: 0 0 20px rgba(79, 195, 247, 0.9);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .time-module-subtitle {
+            font-size: 28px;
+            color: #81d4fa;
+            opacity: 0.9;
+        }
+        
+        .time-content-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            flex: 1;
+        }
+        
+        .time-content-card {
+            background: rgba(20, 40, 80, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(64, 128, 255, 0.4);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .time-content-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #00bcd4, #3f51b5);
+        }
+        
+        .time-content-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 100, 255, 0.5);
+            border-color: #4fc3f7;
+        }
+        
+        .time-card-icon {
+            font-size: 54px;
+            color: #4fc3f7;
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(79, 195, 247, 0.9);
+            transition: all 0.4s ease;
+        }
+        
+        .time-content-card:hover .time-card-icon {
+            transform: scale(1.2);
+        }
+        
+        .time-card-title {
+            font-size: 26px;
+            color: #e1f5fe;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .time-card-desc {
+            font-size: 18px;
+            color: #b3e5fc;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* Éléments de machine */
+        .time-label {
+            position: absolute;
+            right: 60px;
+            top: 50px;
+            font-size: 32px;
+            color: #81d4fa;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(129, 212, 250, 0.8);
+            z-index: 20;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .time-years {
+            position: absolute;
+            right: 60px;
+            top: 90px;
+            font-size: 48px;
+            color: #4fc3f7;
+            font-weight: bold;
+            z-index: 20;
+            text-shadow: 0 0 20px rgba(79, 195, 247, 0.9);
+            line-height: 1.2;
+        }
+        
+        .start-button {
+            position: absolute;
+            right: 60px;
+            bottom: 50px;
+            background: linear-gradient(45deg, #00bcd4, #3f51b5);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 28px;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(0, 188, 212, 0.8);
+            transition: all 0.4s ease;
+            z-index: 20;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .start-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 188, 212, 1);
+            letter-spacing: 4px;
+        }
+        
+        .windows-logo {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 20;
+        }
+        
+        .window-pane {
+            width: 50px;
+            height: 50px;
+            background: rgba(64, 128, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(64, 128, 255, 0.7);
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .window-pane:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(64, 128, 255, 1);
+        }
+        
+        .progress-ring {
+            position: absolute;
+            right: 60px;
+            top: 170px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(#00bcd4 0% 75%, transparent 75% 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            box-shadow: 0 0 25px rgba(0, 188, 212, 0.7);
+            animation: pulse 3s infinite alternate;
+        }
+        
+        .progress-ring-inner {
+            width: 65px;
+            height: 65px;
+            background: #0c0c24;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4fc3f7;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        /* FOOTER */
+        .platform-footer {
+            background: rgba(10, 15, 30, 0.9);
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 150, 255, 0.3);
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-title {
+            font-size: 22px;
+            color: #4fc3f7;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .footer-link {
+            color: #b3e5fc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(20, 40, 80, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4fc3f7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, #00bcd4, #3f51b5);
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            color: #81d4fa;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+        
+        /* ANIMATIONS */
+        @keyframes vortex {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translate(200px, -150px) scale(1.2); opacity: 0; }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .time-content-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .time-module-title {
+                font-size: 36px;
+            }
+            
+            .time-module-subtitle {
+                font-size: 22px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .time-content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-navigation {
+                width: 200px;
+            }
+            
+            .time-nav-item {
+                padding: 15px;
+                font-size: 16px;
+            }
+            
+            .start-button {
+                padding: 12px 25px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête de la plateforme -->
+    <header class="platform-header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="logo-text">Time Explorer</div>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="#" class="nav-link">Accueil</a>
+            <a href="#" class="nav-link">Cours</a>
+            <a href="#" class="nav-link active">Modules</a>
+            <a href="#" class="nav-link">Profil</a>
+            <a href="#" class="nav-link">Contact</a>
+        </nav>
+    </header>
+    
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1 class="section-title">Module 1 : Windows</h1>
+            <p class="section-description">
+                Explorez nos différents modules d'apprentissage conçus comme des voyages dans le temps.
+                Chaque module vous transporte dans une nouvelle ère de connaissances à découvrir.
+            </p>
+        </div>
+        
+        <!-- Liste des modules -->
+        <div class="modules-container">
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3 class="module-title">Introduction à l'informatique</h3>
+                </div>
+                <p class="module-description">
+                    Découvrez les fondamentaux de l'informatique et l'évolution des technologies.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 40%"></div>
+                </div>
+                <div class="progress-text">40% complété</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fab fa-windows"></i>
+                    </div>
+                    <h3 class="module-title">Environnement Windows</h3>
+                </div>
+                <p class="module-description">
+                    Maîtrisez l'interface Windows et ses fonctionnalités essentielles.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 20%"></div>
+                </div>
+                <div class="progress-text">20% complété</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="module-title">Navigation Internet</h3>
+                </div>
+                <p class="module-description">
+                    Apprenez à naviguer efficacement et en toute sécurité sur internet.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 65%"></div>
+                </div>
+                <div class="progress-text">65% complété</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="module-title">Traitement de texte</h3>
+                </div>
+                <p class="module-description">
+                    Créez et formatez des documents professionnels avec Word.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 30%"></div>
+                </div>
+                <div class="progress-text">30% complété</div>
+            </div>
+        </div>
+        
+        <!-- Module Windows - Machine à Voyager dans le Temps -->
+        <h2 class="section-title" style="text-align: left; margin-top: 50px;">Module Windows</h2>
+        <p class="section-description" style="text-align: left; margin-bottom: 30px;">
+            Plongez dans l'évolution de Windows à travers un voyage temporel interactif
+        </p>
+        
+        <div class="time-machine-container">
+            <div class="time-grid"></div>
+            <div class="time-vortex"></div>
+            <div class="time-particles" id="particles"></div>
+            
+            <div class="time-content">
+                <div class="time-navigation">
+                    <div class="time-nav-header">
+                        <div class="time-nav-title">Time Explorer</div>
+                        <div class="time-nav-subtitle">Plateforme Éducative</div>
+                    </div>
+                    
+                    <div class="time-nav-items">
+                        <a href="#" class="time-nav-item">
+                            <i class="fas fa-user-astronaut"></i>
+                            <span>Profil</span>
+                        </a>
+                        <a href="#" class="time-nav-item">
+                            <i class="fas fa-comments"></i>
+                            <span>Discussion</span>
+                        </a>
+                        <a href="#" class="time-nav-item">
+                            <i class="fas fa-chart-network"></i>
+                            <span>Suivi personnel</span>
+                        </a>
+                        <a href="#" class="time-nav-item">
+                            <i class="fas fa-undo-alt"></i>
+                            <span>Retour</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="time-main-content">
+                    <div class="time-module-header">
+                        <h1 class="time-module-title">Module 1 : Windows</h1>
+                        <div class="time-module-subtitle">Unité 1 : Introduction à l'environnement Windows</div>
+                    </div>
+                    
+                    <div class="time-content-grid">
+                        <div class="time-content-card">
+                            <div class="time-card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="time-card-title">Concepts théoriques clés</h3>
+                            <p class="time-card-desc">Découvrez les fondamentaux de l'environnement Windows</p>
+                        </div>
+                        
+                        <div class="time-content-card">
+                            <div class="time-card-icon">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <h3 class="time-card-title">Vidéo tutoriel</h3>
+                            <p class="time-card-desc">Guide visuel pour maîtriser l'interface Windows</p>
+                        </div>
+                        
+                        <div class="time-content-card">
+                            <div class="time-card-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h3 class="time-card-title">Exercices pratiques</h3>
+                            <p class="time-card-desc">Pratiquez vos compétences avec des exercices guidés</p>
+                        </div>
+                        
+                        <div class="time-content-card">
+                            <div class="time-card-icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <h3 class="time-card-title">Auto évaluation</h3>
+                            <p class="time-card-desc">Testez vos connaissances avec nos quiz interactifs</p>
+                        </div>
+                        
+                        <div class="time-content-card">
+                            <div class="time-card-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h3 class="time-card-title">Évaluation sommative</h3>
+                            <p class="time-card-desc">Validez vos acquis avec une évaluation finale</p>
+                        </div>
+                        
+                        <div class="time-content-card">
+                            <div class="time-card-icon">
+                                <i class="fas fa-folder-upload"></i>
+                            </div>
+                            <h3 class="time-card-title">Dépôt de travail</h3>
+                            <p class="time-card-desc">Soumettez votre projet de fin de module</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Éléments de machine à voyager dans le temps -->
+            <div class="time-label">ANNÉES</div>
+            <div class="time-years">2020<br>IA</div>
+            <button class="start-button">START</button>
+            
+            <!-- Logo Windows -->
+            <div class="windows-logo">
+                <div class="window-pane">W</div>
+                <div class="window-pane">I</div>
+                <div class="window-pane">N</div>
+                <div class="window-pane">D</div>
+            </div>
+            
+            <!-- Élément de progression -->
+            <div class="progress-ring">
+                <div class="progress-ring-inner">75%</div>
+            </div>
+        </div>
+        
+        <!-- Section des autres modules -->
+        <h2 class="section-title" style="text-align: left; margin-top: 50px;">Continuez votre voyage</h2>
+        <div class="modules-container">
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <h3 class="module-title">Tableurs Excel</h3>
+                </div>
+                <p class="module-description">
+                    Maîtrisez les tableurs et l'analyse de données avec Excel.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 10%"></div>
+                </div>
+                <div class="progress-text">10% complété</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3 class="module-title">Design Graphique</h3>
+                </div>
+                <p class="module-description">
+                    Apprenez les bases du design et de la création graphique.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 5%"></div>
+                </div>
+                <div class="progress-text">5% complété</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="module-title">Cybersécurité</h3>
+                </div>
+                <p class="module-description">
+                    Protégez vos données et naviguez en toute sécurité en ligne.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 15%"></div>
+                </div>
+                <div class="progress-text">15% complété</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-card-header">
+                    <div class="module-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="module-title">Cloud Computing</h3>
+                </div>
+                <p class="module-description">
+                    Découvrez le stockage en ligne et les services cloud.
+                </p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">Pas encore commencé</div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Pied de page -->
+    <footer class="platform-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">Time Explorer</h3>
+                <p style="color: #b3e5fc; line-height: 1.6; margin-bottom: 20px;">
+                    Plateforme éducative innovante utilisant le voyage dans le temps comme métaphore d'apprentissage.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">Modules</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Informatique de base</a>
+                    <a href="#" class="footer-link">Environnement Windows</a>
+                    <a href="#" class="footer-link">Navigation Internet</a>
+                    <a href="#" class="footer-link">Traitement de texte</a>
+                    <a href="#" class="footer-link">Tableurs Excel</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">Ressources</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Tutoriels vidéo</a>
+                    <a href="#" class="footer-link">Exercices pratiques</a>
+                    <a href="#" class="footer-link">Guides PDF</a>
+                    <a href="#" class="footer-link">Forum de discussion</a>
+                    <a href="#" class="footer-link">FAQ</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-title">Contact</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Support technique</a>
+                    <a href="#" class="footer-link">Suggestion d'amélioration</a>
+                    <a href="#" class="footer-link">Partenariats</a>
+                    <a href="#" class="footer-link">Espace enseignant</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 Time Explorer - Plateforme Éducative. Tous droits réservés.
+        </div>
+    </footer>
+
+    <script>
+        // Création des particules
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Taille aléatoire
+            const size = Math.random() * 40 + 10;
