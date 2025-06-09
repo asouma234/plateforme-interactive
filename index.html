@@ -12,18 +12,26 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
+       body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Supprimez ou commentez ces lignes :
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+    
+    /* Ajoutez ces propriétés pour votre image de fond */
+    background-image: url('chemin/vers/votre-image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
         body::before {
             content: '';
             position: absolute;
